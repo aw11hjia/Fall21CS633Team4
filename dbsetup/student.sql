@@ -1,25 +1,25 @@
 use registration;
 
 create table student
-  (	username	varchar     primary key,
-	password	varchar     not null,
-	firstName	varchar,
-	lastLame	varchar,
-    gender      varchar,
+  (	username	varchar(15)		primary key,
+	password	varchar(15)     not null,
+	firstName	varchar(15),
+	lastLame	varchar(15),
+    gender      char,
 	dob		    date
   );
 
 create table class
-  (	department		varchar     primary key,
+  (	department		varchar(2)     primary key,
 	number	        smallint    primary key,
-	description	    varchar,
-	instructor	    varchar,
+	description	    varchar(1000),
+	instructor	    varchar(50),
 	classSchedule   datetime
   );
 
 create table register
-  (	username	varchar	    not null,
-	department	varchar     not null,
+  (	username	varchar(15)	    not null,
+	department	varchar(2)     not null,
     number      smallint    not null,
 	time        datetime,
 	primary key (username, department, number),
