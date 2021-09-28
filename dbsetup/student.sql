@@ -15,7 +15,7 @@ create table class
 	description	    varchar(1000),
 	instructor	    varchar(50),
 	classSchedule   datetime
-    primary key (department, number),
+    primary key (department, number)
   );
 
 create table register
@@ -23,7 +23,7 @@ create table register
 	department	varchar(2)     not null,
     number      smallint    not null,
 	time        datetime,
-	primary key (username, department, number),
+	primary key (username, department, number)
   );
 
 
