@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8" />
+    <link rel="icon" href="https://glitch.com/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{{seo.title}}</title>
+
+    <!-- Import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/style.css" />
+
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>Register</title>
+
+      <style>
+          fieldset {
+              padding: 0 0px;
+              margin-left: 10px;
+          }
+      </style>
+    <script language="JavaScript">
+      function backgroundChange(){
+        {{#if haveSearched}}
+           background.style = "place-items: start center; background: #FFFFF"; 
+         {{else}}
+           background.style = "place-items: start left; background-repeat: no-repeat; background-position: center; background-size: 1700px 1000px; background-image: url('https://cdn.glitch.me/675ea5b2-1665-4815-bbb7-29d853e91a1f%2Fbook-stack.jpg?v=1637021464041')"
+        {{/if}}
+      }
+    </script>
+  </head>
+  
+  <body onload="backgroundChange()">
+    
+    <header class="header">
+       <div class="links">
+        <a href="/">Home</a>
+        <span class="divider">|</span>
+        <a href="/schedule">Schedule</a>
+        <span class="divider">|</span>
+        <a href="/class">Class Registration</a>
+      </div> 
+      <h1>
+       University Class Scheduler
+      </h1>
+      <form style="float: right; clear: both" action='/logout' method='POST'>
+          <button type="submit" class="btn--remix">Logout</button>    
+      </form>
+    </header>
+    
+    <div>
+     
+    </div>
+    
+    <div class="wrapper" id="background">
+      <div class="content" role="main" style="margin-left: 10%">
+        
+        <h1 style="font-size: 34px">Find a Class</h1>
+
+          <br> 
+
+
+        <form action="/classlist" method='POST'>
+
+          <fieldset style="width: 400px; margin-bottom: 5px; margin-top: 5px; border: none">
+             <label for='department'>Department</label>
+                  <select name="department" id="department">
+                      <option value="CS">CS</option>
+                      <option value="AD">AD</option>
+                      <option value="UA">UA</option>
+                  </select>
+          </fieldset>
+
+          <fieldset style="width: 400px; margin-bottom: 5px; margin-top: 5px; border: none">
+              <table>
+                  <tr>
+                      <td style="width:70%">
+                          <label for='number'>Number</label>
+                          <input type='number' id='number' name='number'>
+                      </td>
+                  </tr>
+              </table>
+          </fieldset>
+
+          <fieldset style="width: 400px; margin-bottom: 5px; margin-top: 5px; border: none">
+              <button type="submit" class="btn--remix">Check Class</button>    
+          </fieldset>
+        </form>
+
+        {{#if haveSearched}}
+          {{#if haveResult}}
+        <div class="wrapper" style="place-items: start center; display: inline-block;">
+                    <h2 style="text-align: center;">Class List</h2>
+          
+                    <table class="ui table" id="rowCtr">
+                      <tr>
+                        <th>Action</th>
+                        <th>Department</th>
+                        <th>Number</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Instructor</th>
+                        <th>Class Schedule</th>
+                      </tr>
+                      {{#each classList}}
+                        <tr>
+                          <td><input name="type_radio" type="radio" onclick="resetError()" value="{&quot;department&quot;: &quot;{{department}}&quot;, &quot;number&quot;: {{number}} }"/></td>
+                          <td>{{department}}</td>
+                          <td>{{number}}</td>
+                          <td>{{title}}</td>
+                          <td>{{description}}</td>
+                          <td>{{instructor}}</td>
+                          <td>{{classSchedule}}</td>
+                        </tr>
+                      {{/each}}
+                    </table>
+        </div>
+
+
+        <button class="btn--remix" onclick="registerClass()">Add Class</button>
+          {{/if}}
+        {{/if}}
+        {{#if resultErr}}<div id="no_class"><p style="color:red;">There is no class with provided input!</p></div>{{/if}}
+        <div id="registered_error" style="display:none"><p style="color:red;">This class is already registered!</p></div>
+
+        </br>
+      
+      </div>
+    </div>
+  
+  
+    <footer class="footer">
+      <div></div>
+      <a class="btn--remix" href="/adminView">Admin</a>
+    </footer>
+  </body>
+
+</html>
+
+<script>
+  
+    let classObj = {};
+    
+  
+    function registerClass() {
+            var ele = document.getElementsByName('type_radio');
+            var selectedClass = ""  
+            for(i = 0; i < ele.length; i++) {
+                if(ele[i].checked)
+                //alert("value: "+ele[i].value);
+                selectedClass = ele[i].value;
+            }
+            var classObj = JSON.parse(selectedClass);
+            var params = JSON.stringify(classObj);
+            //alert(params);
+      
+            var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+            var theUrl = "/registerClass";
+            xmlhttp.open("POST", theUrl);
+            xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                  sleep(500);
+                  window.location.replace("/schedule");
+                  
+                  //   window.location.replace("/schedule");
+                  // if this.response.params.registerClass {
+                  //   sleep(500);
+                  //   window.location.replace("/schedule");
+                  // } else {
+                  //   document.getElementById("registered_error").style.display = "block";
+                  // }
+                } else if (this.status == 403){
+                  document.getElementById("registered_error").style.display = "block";
+                }
+            }
+      
+      
+            xmlhttp.send(params);
+
+            // sleep(500);
+            // window.location.replace("/schedule");
+      
+            
+            
+      }
+  
+    function sleep(miliseconds) {
+       var currentTime = new Date().getTime();
+
+       while (currentTime + miliseconds >= new Date().getTime()) {
+       }
+    }
+  
+    function resetError() {
+      document.getElementById("registered_error").style.display = "none";
+    }
+
+  
+</script>
+
+

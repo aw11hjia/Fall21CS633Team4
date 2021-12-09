@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- 
+    This is the main Handlebars template for the site 
+    - When the user visits the homepage or submits a choice the app calls the endpoints in server.js
+    - The server script passes data in here and the Handlebars code builds it into the HTML page
+  -->
+
+  <meta charset="utf-8" />
+  <link rel="icon" href="https://glitch.com/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>{{seo.title}}</title>
+
+
+  <!-- Import the webpage's stylesheet -->
+  <link rel="stylesheet" href="/style.css" />
+  
+
+</head>
+  
+<body>
+  
+  <header class="header">
+       <div class="links">
+        <a href="/">Home</a>
+        <span class="divider">|</span>
+        <a href="/schedule">Schedule</a>
+        <span class="divider">|</span>
+        <a href="/class">Class Registration</a>
+      </div> 
+      <h1>
+       University Class Scheduler
+      </h1>
+      <form style="float: right; clear: both" action='/logout' method='POST'>
+          <button type="submit" class="btn--remix">Logout</button>    
+      </form>
+    </header>
+  
+  
+  <div class="wrapper" style="place-items: start">
+    <div class="content" role="main">
+
+        <form action="/students" method="post">
+          
+        {{#if failed}}
+          <p style="color:red;">{{failed}}</p>
+        {{/if}}
+          
+        <h3>
+          Get All Users
+        </h3>
+
+        <p>
+          Enter your admin key to confirm:
+        </p>
+        
+        <!-- Server returns a failed flag if the submitted key doesn't match -->
+          
+        <input type="password" id="pass" name="key" required>
+        <button type="submit">Get Users</button>
+      </form>
+  
+      <div>
+            <h2>user list</h2>
+            <table id="rowCtr">
+              <tr>
+                <th>username</th>
+                <th>first name</th>
+                <th>last name</th>
+                <th>gender</th>
+                <th>date of birth</th>
+              </tr>
+              {{#each students}}
+                <tr>
+                  <td>{{username}}</td>
+                  <td>{{firstName}}</td>
+                  <td>{{lastName}}</td>
+                  <td>{{gender}}</td>
+                  <td>{{dob}}</td>
+                </tr>
+              {{/each}}
+            </table>
+  </div>
+  
+  
+<form action="/removeStudent" method="post">
+          
+        <h3>
+          Delete A Student
+        </h3>
+
+        <p>
+          Enter your admin key to confirm:
+        </p>
+                  
+        <input type="password" id="pass" name="key" required>
+        <p>
+          Enter the username you want to remove:
+        </p>
+        <input type="username" id="username" name="username" required>
+        <br><br>
+        <button type="submit">Remove User</button>
+  
+</form>
+      
+<form action="/addClass" method="post">
+          
+        <h3>
+          Add a class
+        </h3>
+
+        <p>
+          Enter your admin key to confirm:
+        </p>            
+        <input type="password" id="pass" name="key" required>
+        <p>
+          Department:
+        </p>
+        <input type="department" id="department" name="department" required>
+         <p>
+          Number:
+        </p>
+        <input type="number" id="number" name="number" required>
+         <p>
+          Title:
+        </p>
+        <input type="title" id="title" name="title" required>
+         <p>
+          Description:
+        </p>
+        <input type="description" id="description" name="description" required>
+        <p>
+          Instructor:
+        </p>
+        <input type="instructor" id="instructor" name="instructor" required>
+         <p>
+          Class Schedule:
+        </p>
+        <input type="classSchedule" id="classSchedule" name="classSchedule" required>
+        <br><br>
+        <button type="submit">Add Class</button>
+  
+</form>
+  
+  
+<form action="/removeClass" method="post">
+          
+        <h3>
+          Remove a Class
+        </h3>
+
+        <p>
+          Enter your admin key to confirm:
+        </p>            
+        <input type="password" id="pass" name="key" required>
+        <p>
+          Department:
+        </p>
+        <input type="department" id="department" name="department" required>
+         <p>
+          Number:
+        </p>
+        <input type="number" id="number" name="number" required>
+        <br><br>
+        <button type="submit">Remove Class</button>
+  
+</form>
+      
+    </div>
+  </div>
+  
+  </body>
+  
+</html>

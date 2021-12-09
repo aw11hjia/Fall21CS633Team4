@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8" />
+    <link rel="icon" href="https://glitch.com/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{{seo.title}}</title>
+
+    <!-- Import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/style.css" />
+
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>Register</title>
+
+      <style>
+          fieldset {
+              padding: 0 0px;
+              margin-left: 10px;
+          }
+      </style>
+  </head>
+
+  <body>
+    <header class="header">
+       <div class="links">
+        <a href="/">Home</a>
+        <span class="divider">|</span>
+        <a href="/schedule">Schedule</a>
+        <span class="divider">|</span>
+        <a href="/class">Class Registration</a>
+      </div> 
+      <h1>
+       University Class Scheduler
+      </h1>
+      <form style="float: right; clear: both" action='/logout' method='POST'>
+          <button type="submit" class="btn--remix">Logout</button>    
+      </form>
+    </header>
+
+    <div class="wrapper" style="place-items: start left; background-repeat: no-repeat; background-position: center; background-size: 1700px 1000px; background-image: url('https://cdn.glitch.me/675ea5b2-1665-4815-bbb7-29d853e91a1f%2Fbook-stack.jpg?v=1637021464041')">
+      <div class="content" role="main" style="margin-left: 10%">
+    
+
+        <h1 style="font-size: 34px">Drop Class Page</h1>
+        
+           <br> 
+  
+        </form>
+
+        <div>
+                  <h2>Registered Class Schedule</h2>
+                  <table class="ui padded table" id="rowCtr">
+                    <tr>
+                      <th>Action</th>
+                      <th>Department</th>
+                      <th>Number</th>
+                      <th>Title</th>
+                      <th>Class Schedule</th>
+                    </tr>
+                    {{#each schedule}}
+                      <tr>
+                        <td><input name="type_radio" type="radio" value="{&quot;department&quot;: &quot;{{department}}&quot;, &quot;number&quot;: {{number}}, &quot;title&quot;: &quot;{{title}}&quot;}"/></td>
+                        <td>{{department}}</td>
+                        <td>{{number}}</td>
+                        <td>{{title}}</td>
+                        <td>{{classSchedule}}</td>
+                      </tr>
+                    {{/each}}
+                  </table>
+        </div>
+
+
+      <button class="btn--remix" onclick="dropClass()">Drop Class</button>
+      </br>
+      
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div></div>
+      <a class="btn--remix" href="/adminView">Admin</a>
+    </footer>
+
+  </body>
+</html>
+
+<script>
+    let classObj = {};
+  
+    function dropClass() {
+            var ele = document.getElementsByName('type_radio');
+            var selectedClass = ""  
+            for(i = 0; i < ele.length; i++) {
+                if(ele[i].checked)
+                //alert("value: "+ele[i].value);
+                selectedClass = ele[i].value;
+            }
+            var classObj = JSON.parse(selectedClass);
+            var params = JSON.stringify(classObj);
+            //alert(params);
+      
+            var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+            var theUrl = "/dropClass";
+            xmlhttp.open("POST", theUrl);
+            xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xmlhttp.send(params);
+            sleep(500);
+            window.location.reload();
+            
+    }
+  
+    function sleep(miliseconds) {
+       var currentTime = new Date().getTime();
+       while (currentTime + miliseconds >= new Date().getTime()) {
+       }
+    }
+  
+</script>
