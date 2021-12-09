@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- 
+    This is the main Handlebars template for the site 
+    - When the user visits the homepage or submits a choice the app calls the endpoints in server.js
+    - The server script passes data in here and the Handlebars code builds it into the HTML page
+  -->
+
+  <meta charset="utf-8" />
+  <link rel="icon" href="https://glitch.com/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>{{seo.title}}</title>
+
+  <!-- Meta tags for SEO and social sharing -->
+  <link rel="canonical" href="{{seo.url}}">
+  <meta name="description" content="{{seo.description}}">
+  <meta property="og:title" content="{{seo.title}}">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="{{seo.url}}">
+  <meta property="og:description" content="{{seo.description}}">
+  <meta property="og:image" content="{{seo.image}}">
+  <meta name="twitter:card" content="summary">
+
+  <!-- Import the webpage's stylesheet -->
+  <link rel="stylesheet" href="/style.css" />
+
+</head>
+
+<body>
+  <header class="header">
+       <div class="links">
+        <a href="/">Home</a>
+        <span class="divider">|</span>
+        <a href="/schedule">Schedule</a>
+        <span class="divider">|</span>
+        <a href="/class">Class Registration</a>
+      </div> 
+      <h1>
+       University Class Scheduler
+      </h1>
+      <form style="float: right; clear: both" action='/logout' method='POST'>
+          <button type="submit" class="btn--remix">Logout</button>    
+      </form>
+    </header>
+  
+  
+  <div class="wrapper" style="place-items: start right; background-repeat: no-repeat; background-position: center; background-size: 1700px 1000px; background-image: url('https://cdn.glitch.me/675ea5b2-1665-4815-bbb7-29d853e91a1f%2Fbook-laptop.jpg?v=1638588864861')">
+    <div class="content" role="main">
+
+      <!-- This is the start of content for our page -->
+      <div style="width: 500px"></div>
+      <br>
+      {{#if error}}
+      <p class="error">
+        {{error}}
+      </p>
+      
+      {{else}}
+      <!-- Server returns a flag when the user has submitted a choice and we show the results -->
+      <div style="display:flex; justify-content: space-evenly;">
+         <a class="btn--remix" style="margin-left: 0; text-align: center; width: 150px" href="/login">Login</a>
+        <a class="btn--remix" style="margin-left: 0; text-align: center; width: 150px" href="/register">Register</a> 
+        
+      </div>
+      
+<!--       <div class="homepage">
+        <p style="display:flex; justify-content: space-evenly;">
+          <a class="btn--remix" style="margin-left: 0;" href="/login">Login</a>
+          <a class="btn--remix" style="margin-left: 0;" href="/register">Register</a>
+        </p>
+        
+      </div> -->
+
+      {{/if}}
+
+    </div>
+  </div>
+
+  <footer class="footer">
+      <div></div>
+      <a class="btn--remix" href="/adminView">Admin</a>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <!-- 
+    This is the main Handlebars template for the site 
+    - When the user visits the homepage or submits a choice the app calls the endpoints in server.js
+    - The server script passes data in here and the Handlebars code builds it into the HTML page
+  -->
+
+  <meta charset="utf-8" />
+  <link rel="icon" href="https://glitch.com/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>{{seo.title}}</title>
+
+  <!-- Import the webpage's stylesheet -->
+  <link rel="stylesheet" href="/style.css" />
+  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Register</title>
+
+    <style>
+        fieldset {
+            padding: 0 0px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+  
+<body> 
+  
+   <header class="header">
+       <div class="links">
+        <a href="/">Home</a>
+        <span class="divider">|</span>
+        <a href="/schedule">Schedule</a>
+        <span class="divider">|</span>
+        <a href="/class">Class Registration</a>
+      </div> 
+      <h1>
+       University Class Scheduler
+      </h1>
+      <form style="float: right; clear: both" action='/logout' method='POST'>
+          <button type="submit" class="btn--remix">Logout</button>    
+      </form>
+    </header>
+  
+   <div class="wrapper" style="place-items: start center; background-repeat: no-repeat; background-position: center; background-size: 1700px 1000px; background-image: url('https://cdn.glitch.me/675ea5b2-1665-4815-bbb7-29d853e91a1f%2Fbook-stack.jpg?v=1637021464041')">
+    <div class="content" role="main">
+      
+      <br><br><br>
+  
+      <h1 style="font-size: 34px">Login</h1>
+      <form action='/login' method='POST'>
+
+      <!--   <div>
+          <label for='username'>Username</label>
+          <input type='text' id='username' name='username' required>
+        </div>
+
+        <div>
+          <label for='password'>Password</label>
+          <input type='text' id='password' name='password' required>
+        </div>
+
+        <button type="submit">Login</button> -->
+        <fieldset style="width: 400px; margin-bottom: 5px; margin-top: 5px; border: none">
+                <table> Username:
+                    <tr>
+                        <td style="width:100%">
+                            <input required type="text" id='username' name='username' size="25" placeholder="ex: user001">
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+            <fieldset style="width: 400px; margin-bottom: 5px; margin-top: 5px; border: none">
+                <table> Password:
+                    <tr>
+                        <td style="width:70%">
+                            <input required type='password' id='password' name='password' size="25">
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+
+            <fieldset style="width: 400px; margin-bottom: 5px; margin-top: 5px; border: none">
+              <button type="submit" class="btn--remix" style="background-color: blue; color: white">Login</button>    
+           </fieldset> 
+
+
+          {{#if loginFailed}}
+           <fieldset style="width: 400px; margin-bottom: 5px; margin-top: 5px; border: none">
+             <p style="color:red;">
+                Invalid username or password entered!
+             </p>    
+           </fieldset> 
+           {{/if}}
+
+          <fieldset style="width: 400px; margin-bottom: 5px; margin-top: 5px; border: none"> 
+            <a href='/register'>Register</a>
+          </fieldset>
+
+      </form>  
+     </div>
+  </div>
+  
+   <footer class="footer">
+      <div></div>
+      <a class="btn--remix" href="/adminView">Admin</a>
+    </footer>
+  
+</body>
+
+</html>
